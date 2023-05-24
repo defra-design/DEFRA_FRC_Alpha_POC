@@ -19,3 +19,9 @@ steps:
     npm install
   displayName: 'npm install'
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Azure-Self-CR'
+    repository: 'defra-frc-alpha'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'

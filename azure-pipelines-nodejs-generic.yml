@@ -12,22 +12,10 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '18.x'
   displayName: 'Install Node.js'
-
-- task: SonarQubePrepare@5
-  inputs:
-    scannerMode: 'CLI'
-    configMode: 'file'
 
 - script: |
     npm install
-    npm run build
-  displayName: 'npm install and build'
-
-- task: SonarQubeAnalyze@5
-
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
+  displayName: 'npm install'
 

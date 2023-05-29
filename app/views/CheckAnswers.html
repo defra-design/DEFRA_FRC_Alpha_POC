@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{{ govukPhaseBanner({
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
   tag: {
     text: "alpha"
   },
@@ -16,33 +16,46 @@
 {% endblock %}
 
 {% block content %}
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-      <h1 class="govuk-heading-xl">Check your answers before sending your application</h1>
+      <h1 class="govuk-heading-l">Check your answers before submitting your request for exemption</h1>
 
       <h2 class="govuk-heading-m">General details </h2>
 
-      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+      <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Annual turnover 
+            Company 
           </dt>
           <dd class="govuk-summary-list__value">
-            {{ data['AnnualIncome'] }}
-            
+            {{ data.company }}
           </dd>
           <dd class="govuk-summary-list__actions">
             <a href="/AnnunalTurnover">
               Change
-             
             </a>
           </dd>
         </div>
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Exemption period
+            Annual turnover 
+          </dt>
+          <dd class="govuk-summary-list__value">
+            £{{ data['AnnualIncome'] }}
+
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a href="/AnnunalTurnover">
+              Change
+            </a>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Reporting period
           </dt>
           <dd class="govuk-summary-list__value">
             {{ data['ExemptionPeriod'] }}
@@ -50,17 +63,16 @@
           <dd class="govuk-summary-list__actions">
             <a href="/PeriodOfExemption">
               Change
-              
             </a>
           </dd>
         </div>
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Commodity
+            Commodities
           </dt>
           <dd class="govuk-summary-list__value">
-          {{data['FRC']}}
+            {{data['FRC'].join('<br/>') | safe if data['FRC'] else ""}}
           </dd>
           <dd class="govuk-summary-list__actions">
             <a href="/FRCcommodities">
@@ -68,78 +80,100 @@
               <span class="govuk-visually-hidden"> name</span>
             </a>
           </dd>
-         
         </div>
+      </dl>
 
+      {% for commodity in data['selectedCommodities'] %}
+        <dl class="govuk-summary-list">
+          <h2 class="govuk-heading-m">
+            {{commodity.text}}
+          </h2>
 
-       
-        <p></p>
-       
-       
-        {% for commodity in data['selectedCommodities'] %}
-       <p></p>
-        <h2 class="govuk-heading-m"> {{commodity.text}}  </h2>
-
-        <div class="govuk-summary-list__row">
-         
-          <dt class="govuk-summary-list__key">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
             Expected volume
           </dt>
-         
-          <dd class="govuk-summary-list__value">
-            {{commodity.value}} tonnes
-           
-          </dd>
-         
-          <dd class="govuk-summary-list__actions">
-            <a href="/CommodityVolumePage">
-              Change
-              
-            </a>
-          </dd>
-        
-        </div>
 
-        <div class="govuk-summary-list__row">
-         
-          <dt class="govuk-summary-list__key">
-            Methodology
+            <dd class="govuk-summary-list__value">
+              {{commodity.commodityValue}} tonnes
+          </dd>
+
+            <dd class="govuk-summary-list__actions">
+              <a href="/CommodityVolume">
+              Change
+            </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Methodology used
           </dt>
-         
-          <dd class="govuk-summary-list__value">
-            {{ data['description'][loop.index-1] }}
-          
-          </dd>
-         
-          <dd class="govuk-summary-list__actions">
-            <a href="/CommodityVolumePage">
-              Change
-              
-            </a>
-          </dd>
-        
-        </div>
-        {% endfor %} 
 
-        {% if (data['AnnualIncome'] <550) and ( data['ParentCompany']=="Yes") %}
-        <p></p>
-        <h2 class="govuk-heading-m">Parent company details </h2>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
+            <dd class="govuk-summary-list__value">
+              {{ data[commodity.id+'_description']}}
+            </dd>
+
+            <dd class="govuk-summary-list__actions">
+              <a href="/CommodityDetermination">
+              Change
+            </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Methodology documents
+          </dt>
+
+            <dd class="govuk-summary-list__value">
+              {{ data[commodity.id+'_document'] }}
+            </dd>
+
+            <dd class="govuk-summary-list__actions">
+              <a href="/CommodityDetermination">
+              Change
+            </a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Supporting documents
+          </dt>
+
+            <dd class="govuk-summary-list__value">
+              {{ data[commodity.id+'_supporting_document'] if data[commodity.id+'_supporting_document'] else "Supporting document.pdf"}}
+            </dd>
+
+            <dd class="govuk-summary-list__actions">
+              <a href="/CommoditySupportingDocuments">
+              Change
+            </a>
+            </dd>
+          </div>
+        </dl>
+      {% endfor %}
+
+      {% if (data['AnnualIncome'] < 550) and (data['ParentCompany'] == "Yes") %}
+        <dl class="govuk-summary-list">
+          <h2 class="govuk-heading-m">Parent company details </h2>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
             Parent company
           </dt>
-          <dd class="govuk-summary-list__value">
-            {{ data['ParentCompany'] }}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a href="/ParentCompanyDetails">
+            <dd class="govuk-summary-list__value">
+              {{ data['ParentCompany'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a href="/ParentCompanyDetails">
               Change
               
             </a>
-          </dd>
-        </div>
-  
-        <div class="govuk-summary-list__row">
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Parent annual turnover
             </dt>
@@ -149,61 +183,31 @@
             <dd class="govuk-summary-list__actions">
               <a href="/ParentCompanyDetails">
                 Change
-                
               </a>
             </dd>
           </div>
-         {% endif %} 
-        <!-- {% for item in items %}
-        <li>{{ item.title }}</li>
-      {% else %}
-        <li>This would display if the 'item' collection were empty</li>
-      {% endfor %} -->
-       
-          <p></p>
-          <h2 class="govuk-heading-m"> Additional documents </h2>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Document category
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{ data['ParentCompanyAnnualIncome'] }}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a href="/ParentCompanyDetails">
-                Change
-                
-              </a>
-            </dd>
-          </div>
-
-         
-
-
-       
-      </dl>
-
-     
-
-      
+        </dl>
+      {% endif %}
 
       <h2 class="govuk-heading-m">Submit your application</h2>
 
-      <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+      <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
       <form action="/appcomplete" method="post" novalidate>
 
         <input type="hidden" name="answers-checked" value="true">
 
-        <button class="govuk-button" data-module="govuk-button">Save and Continue</button>
-&nbsp;
-<a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary"  data-module="govuk-button">
-  Save and come back later
-</a>
-
-
+        <button class="govuk-button" data-module="govuk-button">Submit</button>
+        <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
+              Save and come back later
+          </a>
       </form>
-      <a class="govuk-link" href="Dashboard">Get help with this page</a>
+
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" href="#">Get help with this page</a>
+        </li>
+      </ul>
 
     </div>
   </div>

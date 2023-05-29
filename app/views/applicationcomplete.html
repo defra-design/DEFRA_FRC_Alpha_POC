@@ -20,19 +20,24 @@
         {% from "govuk/components/panel/macro.njk" import govukPanel %}
 
         {{ govukPanel({
-          titleText: "Application Complete",
+          titleText: "Exemption submitted",
           html: "Your reference number<br><strong>HDJ2123F</strong>"
         }) }}
       </form>
 
-      {{ govukInsetText({
-        text: "Save this reference number for any future support or transactions related to your submission."
-      }) }}
-      <label class="govuk-label govuk-label--m" >Next Steps </label>
+      <p class="govuk-body">Save this reference number for any future support or transactions related to your submission.</p>
+      <label class="govuk-label govuk-label--m" >Next Steps</label>
 
-<p>If there are any questions about your submission, a regulator 
-  will contact you at the email or phone number that you provided.</p>
-  <a class="govuk-link" href="Dashboard">Return to dashboard</a>
+
+<p class="govuk-body">You will receive a copy of your Exemption submission for your records by email.</p>
+<p class="govuk-body">If there are any questions about your Exemption submission, a regulator will contact you at the email or phone number you provided.</p>
+<p class="govuk-body">Your <a class="govuk-link" href="#">feedback</a> will help us improve this service.</p>
+
+  <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" href="/Dashboard">Return to dashboard</a>
+        </li>
+      </ul>
     </div>
   </div>
 

@@ -1,0 +1,79 @@
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader() }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+  tag: {
+    text: "alpha"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="https://www.gov.uk">Home</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Dashboard</a>
+      </li>
+    </ol>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Report your forest risk commodity due diligence
+      </h1>
+
+      <form action="/save-company" method="post" novalidate>
+        {{ govukSelect({
+        id: "company",
+        name: "company",
+        value: data.company,
+        label: {
+          text: "Select a company to view details"
+        },
+        items: data.companyList
+      }) }}
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+        </button>
+
+      </form>
+
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" href="#">Get help with this page</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+            Related Content
+          </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list">
+            <li>
+              <a class="govuk-link" href="#">
+                    Forest Risk Commodities guidance
+                </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </div>
+{% endblock %}

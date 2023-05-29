@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{{ govukPhaseBanner({
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
   tag: {
     text: "alpha"
   },
@@ -25,91 +25,99 @@
       <li class="govuk-breadcrumbs__list-item">
         <a class="govuk-breadcrumbs__link" href="#">Section</a>
       </li>
-     
+
     </ol>
   </div>
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
+
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">
         Report your forest risk commodity due diligence
       </h1>
 
-      <p>If you use forest risk commodities as part of your business activity, you might be required to undertake a due diligence exercise on your supply chains, and to report on this exercise annually to evidence that those commodities 
-        were grown on land legally occupied or owned.  </p>
-    <p>If your business meets the following requirements, you will be required to complete reporting activities:</p>
+      <p class="govuk-body">If you use forest risk commodities as part of your business activity in the UK, you may be required to undertake a due diligence exercise on your supply chains, and to report on this exercise annually to show that those commodities were grown on or sourced from land legally occupied or owned.</p>
+      <p class="govuk-body">Businesses within the scope of this legislation can use this service to:</p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>Meet the requirements for turnover, or is a subsidiary of a business which meets those requirements
-        </li>
-        <li>Uses the specified forest risk commodities within its UK commercial activity
-        </li>
-       
+        <li class="govuk-!-margin-left-2">File and amend exemption</li>
+        <li class="govuk-!-margin-left-2">Submit reports detailing evidence of due diligence activity</li>
       </ul>
- 
-      <p>If your business uses levels of relevant commodities that are below 
-        the specified exemption threshold, you may be eligible to notify/file for an exemption.
 
-    </p>
+      <div class="govuk-inset-text">
+        Find out <a class="govuk-link" href="#">who needs to report their forest risk commodity due diligence</a>.
+      </div>
 
-    
-<p>Find out<a href="#"> who needs to report their forest risk commodities due diligence.</a></p>
-      
-<p>Businesses within the scope of this legislation can use this service to:
-</p>
+      <p class="govuk-body">If your business meets the following requirements, you will be required to complete reporting activities:</p>
 
+      <ul class="govuk-list govuk-list--bullet">
+        <li class="govuk-!-margin-left-2">Trades at or above the threshold for annual turnover</li>
+        <li class="govuk-!-margin-left-2">Uses the specified forest risk commodities within its UK commercial activity at or above the specified volumes</li>
+      </ul>
 
-<ul class="govuk-list govuk-list--bullet">
-    <li>File and amend exemptions</li>
-    <li>Submit annual reports detailing evidence of due diligence activity</li>
-   
-  </ul>
-  
+      <p class="govuk-body">If your business is a subsidiary of another business, for example a holding company, that meets the annual turnover requirements, you may need to provide financial information about your parent company.</p>
+      <p class="govuk-body">If your business uses levels of relevant commodities that are below the specified usage thresholds, you may be eligible to file for an exemption from this reporting requirement.</p>
+
+      <p class="govuk-body govuk-!-margin-top-7 govuk-!-margin-bottom-7">This process will take less than 15 minutes.</p>
+
+      <a href="/SelectCompany" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">Start now
+        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+        </svg>
+      </a>
+
       <h2 class="govuk-heading-m">Before you start</h2>
-      <p>Make sure that you have: 
-    </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-        <li>Reviewed the <a href="#">guidance</a> about when to report and what information you will need to provide   </li>
-        <li>Collected the evidence required to submit your exemption or annual report</li>
-       
+      <p>To complete this process you will:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li class="govuk-!-margin-left-2">Provide the annual turnover of your business,and your parent company if applicable</li>
+        <li class="govuk-!-margin-left-2">Choose the forest risk commodities that your businessuses in any UK commercial activitity</li>
+        <li class="govuk-!-margin-left-2">Provide the volume of usage for those commodities</li>
+        <li class="govuk-!-margin-left-2"> Describe or supply the methods you used to determine your usage</li>
+        <li class="govuk-!-margin-left-2"> Provide evidence of your due diligence activities</li>
       </ul>
+
+      <p class="govuk-body">To do this, before you begin make sure that you have:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li class="govuk-!-margin-left-2">
+          <a class="govuk-link" href="#">Reviewed the guidance</a> about when to report and what information you will need to provide</li>
+        <li class="govuk-!-margin-left-2">Collected the evidence required to submit your exemption or annual report</li>
+      </ul>
+
+      <p class="govuk-body">The online service is also available in Welsh (ar gael yn Gymraeg).</p>
     </div>
+
     <div class="govuk-grid-column-one-third">
 
-        <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
-          <h2 class="govuk-heading-m" id="subsection-title">
+      <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
             Related Content
           </h2>
-          <nav role="navigation" aria-labelledby="subsection-title">
-            <ul class="govuk-list govuk-!-font-size-16">
-              <li>
-                <a href="#">
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list">
+            <li class="govuk-!-margin-left-2">
+              <a class="govuk-link" href="#">
                     Environment Act 2021
                 </a>
-              </li>
-              <li>
-               
-                <a href="#">
+            </li>
+            <li class="govuk-!-margin-left-2">
+
+              <a class="govuk-link" href="#">
                     Forest Risk Commodities guidance
                 </a>
-              </li>
-             
-            </ul>
-          </nav>
-        </aside>
-  
-      </div>
+            </li>
+
+          </ul>
+        </nav>
+      </aside>
+
+    </div>
+
   </div>
-  <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"  data-module="govuk-button">
-    Start now
-    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
-    </svg>
-  </a>
-  <p>The online service is also available in Welsh (ar gael yn Gymraeg).</p>
 
 {% endblock %}

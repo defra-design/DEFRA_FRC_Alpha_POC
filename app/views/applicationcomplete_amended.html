@@ -1,11 +1,12 @@
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
   Confirmation page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 {% block beforeContent %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{{ govukPhaseBanner({
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
   tag: {
     text: "alpha"
   },
@@ -17,23 +18,24 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form class="form" action="/apcomplete" method="post">
-        {% from "govuk/components/panel/macro.njk" import govukPanel %}
 
         {{ govukPanel({
-          titleText: "Application Complete",
+          titleText: "Amendment Submitted",
           html: "Your reference number<br><strong>HDJ2123F</strong>"
         }) }}
       </form>
+      <p class="govuk-body">Save this reference number for any future support or transactions related to your submission.</p>
+      <label class="govuk-label govuk-label--m" >Next Steps</label>
 
-      {{ govukInsetText({
-        text: "Save this reference number for any future support or transactions related to your submission."
-      }) }}
-      <label class="govuk-label govuk-label--m" >Next Steps </label>
+      <p class="govuk-body">You will receive a copy of your Amendment submission for your records by email.</p>
+      <p class="govuk-body">If there are any questions about your Amendment submission, a regulator will contact you at the email or phone number you provided.</p>
+      <p class="govuk-body">Your <a class="govuk-link" href="#">feedback</a> will help us improve this service.</p>
 
-<p>If there are any questions about your submission, a regulator 
-  will contact you at the email or phone number that you provided.</p>
-  <a class="govuk-link" href="Dashboard_amended">Return to dashboard</a>
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" href="/Dashboard">Return to dashboard</a>
+        </li>
+      </ul>
     </div>
   </div>
-
-{% endblock %}
+  {% endblock %}

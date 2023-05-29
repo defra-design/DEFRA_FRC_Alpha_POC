@@ -1,3 +1,4 @@
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -5,59 +6,71 @@
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{{ govukPhaseBanner({
+  {{ govukPhaseBanner({
   tag: {
     text: "alpha"
   },
   html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
 }) }}
-  <a class="govuk-back-link" href="javascript:window.history.back()">Back</a>
+
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="https://www.gov.uk">Home</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="#">Dashboard</a>
+      </li>
+    </ol>
+  </div>
+
 {% endblock %}
 
 {% block content %}
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-row">
 
+    <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Report your forest risk commodity due diligence</h1>
-      {{ govukSelect({
-        id: "subject",
-        name: "subject",
+      
+      <form action="/UserServices" method="post" novalidate>
+        {{ govukSelect({
+        id: "company",
+        name: "company",
+        value: data.company,
         label: {
           text: "Select a company to view details"
         },
-          
-        items: [
-          {
-            value: "choose",
-            text: "Company List",
-            selected: true
-          },
-          {
-            value: "M & S",
-            text: "M & S"
-          },
-          {
-            value: "Primark",
-            text: "Primark"
-          }
-         ]
-      
+        items: data.companyList
       }) }}
 
-      <h2 class="govuk-heading-m">For[COMPANY NAME] </h2>
+        <h2 class="govuk-heading-m">For {{data.company}}</h2>
 
-      <form action="/UserServices" method="post" novalidate>     
-
-        <button type="submit" class="govuk-button" data-module="govuk-button">
-        New Submission
-        </button>
-
+        <button type="submit" class="govuk-button" data-module="govuk-button">New Submission</button>
       </form>
+    </div>
 
- <p></p>
- <p>Submissions</p>
- <h2 class="govuk-heading-m"> InProgress  </h2>
+    <div class="govuk-grid-column-one-third">
+      <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+            Related Content
+          </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list">
+            <li>
+              <a class="govuk-link" href="#">
+                    Forest Risk Commodities guidance
+                </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-full">
+      <span class="govuk-caption-m">Submissions</span>
+      <h1 class="govuk-heading-l">In Progress</h1>
       <dl class="govuk-summary-list govuk-!-margin-bottom-9">
         <div  class="govuk-summary-list__row">
           <dd class="govuk-summary-list__key">
@@ -76,189 +89,201 @@
            Action            
           </dd>
         </div>
-         {% if (data['complete'] =="No") %} 
-        <div class="govuk-summary-list__row">
-          <dd class="govuk-summary-list__key">
-            {{ data['ExemptionPeriod'] }} 
-          </dd>
-          <dd class="govuk-summary-list__value">
-            {{ data['Userservice']}}
-          </dd>
-          <dd class="govuk-summary-list__value">
-            {{data['FRC']}} 
-          </dd>
-          <dd>
-          <strong class="govuk-tag govuk-tag--blue">
-          Inprogress
-           </strong>                    
-        </dd>
-          <dd  class="govuk-summary-list__value">
-            <a href="javascript:javascript:history.go(-1)">
+        {% if (data['complete'] == "No") %}
+          <div class="govuk-summary-list__row">
+            <dd class="govuk-summary-list__key">
+              {{ data['ExemptionPeriod'] }}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{ data['Userservice']}}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              {{data['FRC'].join('<br/>') | safe if data['FRC'] else "" }}
+            </dd>
+            <dd class="govuk-summary-list__value">
+              <strong class="govuk-tag govuk-tag--blue">
+          In Progress
+           </strong>
+            </dd>
+            <dd  class="govuk-summary-list__value">
+              <a href="javascript:javascript:history.go(-1)">
               Edit              
             </a>
-          </dd>
-        </div>
-         {%endif%} 
+            </dd>
+          </div>
+          {%endif%}
+        </dl>
 
-        
+        <span class="govuk-caption-m">Submissions</span>
+        <h1 class="govuk-heading-l">Completed</h1>
 
-
-       
-        <p></p>
-       
-       
-        
-       
-          
-      </dl>
-
-      <p>Submissions</p>
-      <h2 class="govuk-heading-m"> Completed  </h2>
-           <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-             <div class="govuk-summary-list__row">
-               <dt class="govuk-summary-list__key">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
                  Submission period 
                </dt>
-               <dd class="govuk-summary-list__key">
+            <dd class="govuk-summary-list__key">
                  Type            
                </dd>
-               <dd class="govuk-summary-list__key">
+            <dd class="govuk-summary-list__key">
                  Commodities            
                </dd>
-               <dd class="govuk-summary-list__key">
+            <dd class="govuk-summary-list__key">
                 Status            
               </dd>
-               <dd class="govuk-summary-list__key">
+            <dd class="govuk-summary-list__key">
                 Action            
                </dd>
-             </div>
-             {% if (data['complete'] =="Yes") %} 
-            
-             <div class="govuk-summary-list__row">
-               <dt class="govuk-summary-list__key">
-                 {{ data['ExemptionPeriod'] }}
-               </dt>
-               <dd class="govuk-summary-list__value">
-                 {{ data['Userservice']}}
+          </div>
+
+          {% if (data['amendcomplete'] == "Yes") %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                {{ data['thresholdchange_Amend'] }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                Amendment
                </dd>
-               <dd class="govuk-summary-list__value">
-                {{data['FRC']}} 
+              <dd class="govuk-summary-list__value">
+                {{data['amendedCommodity'].join('<br/>') | safe if data['amendedCommodity'] else ""}}
               </dd>
               <dd class="govuk-summary-list__value">
-                <strong class="govuk-tag govuk-tag--green">
-                  Submitted<br>{{ data['currentdate']}}
-                </strong>
+                <span class="govuk-tag govuk-tag--green govuk-!-font-weight-regular">
+                  <strong>Submitted</strong>
+                  <br/>{{ data['currentdate']}}
+                </span>
               </dd>
-               <dd  class="govuk-summary-list__value">
-                <a href="/CheckAnswers">
+              <dd class="govuk-summary-list__value">
+                <a href="/CheckAnswersAmended" class="govuk-link govuk-!-margin-right-4">
                   View              
                 </a>
-                &nbsp &nbsp &nbsp
-                <a href="/amendcommodities">
+                <a href="/amendcommodities" class="govuk-link">
                  Amend              
                </a>
-                </dd>
-             </div> 
-              {%endif%}
+              </dd>
+            </div>
+            {%endif%}
 
-              
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Apr 2021 - Mar 2022
+            {% if (data['complete'] == "Yes") %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  {{ data['ExemptionPeriod'] }}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ data['Userservice']}}
+                </dd>
+                <dd class="govuk-summary-list__value">
+                  {{data['FRC'].join('<br/>') | safe if data['FRC'] else ""}}
+                </dd>
+                <dd class="govuk-summary-list__value">
+                  <span class="govuk-tag govuk-tag--green govuk-!-font-weight-regular">
+                    <strong>Submitted</strong>
+                    <br/>{{ data['currentdate']}}
+                  </span>
+                </dd>
+                <dd class="govuk-summary-list__value">
+                  <a href="/CheckAnswers" class="govuk-link govuk-!-margin-right-4">
+                  View              
+                </a>
+                  {% if (data['amendcomplete'] !== "Yes") %}
+                    <a href="/amendcommodities" class="govuk-link">
+                 Amend              
+               </a>
+                    {%endif%}
+                  </dd>
+                </div>
+                {%endif%}
+
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                Apr 2021 to Mar 2022
               </dt>
-              <dd class="govuk-summary-list__value">
+                  <dd class="govuk-summary-list__value">
                 Report
               </dd>
-              <dd class="govuk-summary-list__value">
+                  <dd class="govuk-summary-list__value">
                 Cocoa
                </dd>
-               <dd class="govuk-summary-list__value">
-                 <strong class="govuk-tag govuk-tag--green">
-                  Submitted<br>02/04/2022
-                 </strong>
-               </dd>
-              <dd  class="govuk-summary-list__value">
-               <a href="#">
+                  <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green govuk-!-font-weight-regular">
+                      <strong>Submitted</strong>
+                      <br/>
+                  02/04/2022
+                 </span>
+                  </dd>
+                  <dd class="govuk-summary-list__value">
+                    <a href="#" class="govuk-link govuk-!-margin-right-4">
                  View              
                </a>
-               &nbsp &nbsp &nbsp
-               <a href="#">
+                    <a href="#" class="govuk-link">
                 Amend              
               </a>
-               </dd>
-            </div> 
+                  </dd>
+                </div>
 
-
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Oct 2021 - Mar 2022
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                Oct 2021 to Mar 2022
               </dt>
-              <dd class="govuk-summary-list__value">
+                  <dd class="govuk-summary-list__value">
                 Amendment 
               </dd>
-              <dd class="govuk-summary-list__value">
+                  <dd class="govuk-summary-list__value">
                 Cocoa
                </dd>
-               <dd class="govuk-summary-list__value">
-                 <strong class="govuk-tag govuk-tag--green">
-                  Submitted<br>02/08/2021
-                 </strong>
-               </dd>
-              <dd  class="govuk-summary-list__value">
-               <a href="#">
+                  <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green govuk-!-font-weight-regular">
+                      <strong>Submitted</strong>
+                      <br/>
+                  02/08/2021
+                 </span>
+                  </dd>
+                  <dd class="govuk-summary-list__value">
+                    <a href="#" class="govuk-link govuk-!-margin-right-4">
                  View              
                </a>
-               &nbsp &nbsp &nbsp
-               <a href="#">
+                    <a href="#" class="govuk-link">
                 Amend              
               </a>
-               </dd>
-            </div> 
+                  </dd>
+                </div>
 
-
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Apr 2021 - Mar 2022
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                Apr 2021 to Mar 2022
               </dt>
-              <dd class="govuk-summary-list__value">
+                  <dd class="govuk-summary-list__value">
                 Exemption
               </dd>
-              <dd class="govuk-summary-list__value">
-                Cocoa, Palm oil
+                  <dd class="govuk-summary-list__value">
+                Cocoa<br/>Palm oil
                </dd>
-               <dd class="govuk-summary-list__value">
-                 <strong class="govuk-tag govuk-tag--green">
-                  Submitted<br>12/12/2020
-                 </strong>
-               </dd>
-              <dd  class="govuk-summary-list__value">
-               <a href="#">
+                  <dd class="govuk-summary-list__value">
+                    <span class="govuk-tag govuk-tag--green govuk-!-font-weight-regular">
+                      <strong>Submitted</strong>
+                      <br/>
+                  12/12/2020
+                  </span>
+                  </dd>
+                  <dd class="govuk-summary-list__value">
+                    <a href="#" class="govuk-link govuk-!-margin-right-4">
                  View              
                </a>
-               &nbsp &nbsp &nbsp
-               <a href="#">
+                    <a href="#" class="govuk-link">
                 Amend              
               </a>
-               </dd>
-            </div> 
-             
-     
-             
-     
-     
-            
-             <p></p>
-            
-            
-             
-            
-               
-           </dl>
-     
+                  </dd>
+                </div>
+              </dl>
 
-      
+              <ul class="govuk-list">
+                <li>
+                  <a class="govuk-link" href="#">Get help with this page</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-
-    </div>
-  </div>
-{% endblock %}
+    {% endblock %}

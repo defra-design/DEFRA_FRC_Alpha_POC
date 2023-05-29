@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Question page template – {{ serviceName }} – GOV.UK Prototype Kit
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -17,7 +17,7 @@
 
 {% block content %}
 
-  <div class="govuk-grid-row">
+ <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-xl">
@@ -27,22 +27,55 @@
         Reporting year {{data.reportingPeriod}}
       </span>
 
-      <form class="form" action="/CommodityVolumeController" method="post">
-        {{ govukCheckboxes({
-              name: "FRC",
-              values:data.FRC,
-              fieldset: {
-                legend: {
-                  text: "Which forest risk commodities are you requesting an exemption for?",
-                  isPageHeading: true,
-                  classes: "govuk-fieldset__legend--l"
-                }
-              },
-              hint: {
-                text: "Usage must be under 1000 tonnes for each selected commodity to be exempt"
-              },
-              items: data['commodities']
-              }) }}
+      <form  action="/CheckAnswers" method="post">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              Supporting documents (optional)
+            </h1>
+          </legend>
+          <p class="govuk-body">
+            Include any additional documentation for the selected commodities to support your exemption request
+          </p>
+
+          {% for commodity in data['selectedCommodities'] %}
+
+            <div class="govuk-!-padding-top-4">
+
+              <h2 class="govuk-heading-l">
+                {{commodity.text}}
+              </h2>
+
+              {{ govukFileUpload({
+                  name: commodity.id+"_supporting_document",
+                  label: {
+                    text: "Upload a file"
+                  } }) 
+              }}
+
+              {{ govukTable({
+                head: [
+                  {
+                    text: "Document type"
+                  },
+                  {
+                    text: "Action"
+                  }
+                ],
+                rows: [
+                  [
+                    {
+                      text: data[commodity.id+"_supporting_document"] if data[commodity.id+"_supporting_document"] else "Supporting document.pdf"
+                    },
+                    {
+                      html: '<a class="govuk-link" href="#">Remove</a>'
+                    }
+                  ]
+                ]}) 
+              }}
+            </div>
+          {% endfor %}
+        </fieldset>
         <button class="govuk-button" data-module="govuk-button">Save and continue</button>
         <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
               Save and come back later

@@ -1,4 +1,3 @@
-
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -6,8 +5,8 @@
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{{ govukPhaseBanner({
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
   tag: {
     text: "alpha"
   },
@@ -17,57 +16,50 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form class="form" action="/ParentCompanyAnnualIncome" method="post">
-        <h1 class="govuk-heading-xl">
-            Provide your parent company details
-          </h1>
-          {{ govukSelect({
-            id: "subject",
-            name: "subject",
-            label: {
-              text: "What is your parent company name?"
-            },
-              hint: {
-              text: "Select the company name from the below list or manually add it"
-            },
-            items: [
-              {
-                value: "choose",
-                text: "Company List",
-                selected: true
-              },
-              {
-                value: "M & S",
-                text: "M & S"
-              },
-              {
-                value: "Primark",
-                text: "Primark"
-              }
-             ]
-          
-          }) }}
-          <p>or</p>
+      <span class="govuk-caption-xl govuk-!-padding-bottom-7">
+        {{data.company}}
+      </span>
 
-          {{ govukInput({
+      <form class="form" action="/ParentCompanyAnnualIncome" method="post">
+        {{ govukSelect({
+        id: "company",
+        name: "company",
+        value: data.company,
+        fieldset: {
+          legend: {
+            text: "Provide your parent company details",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        label: {
+          text: "Select your parent company"
+        },
+        items: data.companyList
+      }) }}
+
+        <p>or</p>
+
+        {{ govukInput({
             label: {
               text: "Provide your company name"
             },
             hint: {
-              text: "Add your parent company name only if not found in the above list"
+              text: "Only add your parent company name if it is not in the above list"
             },
+            value: data['authentication-code'],
             classes: "govuk-!-width-two-thirds",
             id: "authentication-code",
             name: "authentication-code",
             spellcheck: false
           }) }}
 
-          {{ govukInput({
+        {{ govukInput({
             id: "ParentCompanyAnnualIncome",
             name: "ParentCompanyAnnualIncome",
+            value: data['ParentCompanyAnnualIncome'],
             label: {
               text: "What is your parent company’s annual turnover?"
               
@@ -78,17 +70,35 @@
             classes: "govuk-!-width-one-third",
             spellcheck: false
           }) }}
-          <button class="govuk-button" data-module="govuk-button">Save and Continue</button>
-          &nbsp;
-          <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary"  data-module="govuk-button">
+        <button class="govuk-button" data-module="govuk-button">Save and continue</button>
+        <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
             Save and come back later
         </a>
-          
-                </form>
-                <a class="govuk-link" href="#">Get help with this page</a>
-        
-    </div>
-   
-</div>
+      </form>
 
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" href="#">Get help with this page</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+            Related Content
+          </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list">
+            <li>
+              <a class="govuk-link" href="#">
+                    Forest Risk Commodities guidance
+                </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+
+  </div>
 {% endblock %}

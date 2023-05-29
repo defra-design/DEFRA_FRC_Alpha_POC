@@ -18,19 +18,19 @@ if Exemption is selected in radiobutton
 
                               4 a->if annual turnover >100 mill -> PeriodOfExemption.html
                              4 b-> selecting commodities ->FRCcommodities.html
-                             4 c-> commodity volume collecting ->CommodityVolumePage.html
+                             4 c-> commodity volume collecting ->CommodityVolume.html
                                  each commodity volume <999 tonnes if not error throw on same page
                             4 d->methods to determine commodity -> CommodityDetermination.html
-                            4 e-> commodity file upload page -> CommodityFileUpload.html
+                            4 e-> commodity file upload page -> CommoditySupportingDocuments.html
                             4 f-> checkanswers page ->CheckAnswers.html
                             4 g-> application completed -> applicationcomplete.html
             {{ if annual turnover >100 mill }} 
                 4 a->if annual turnover >100 mill -> PeriodOfExemption.html
                 4 b-> selecting commodities ->FRCcommodities.html
-                4 c-> commodity volume collecting ->CommodityVolumePage.html
+                4 c-> commodity volume collecting ->CommodityVolume.html
                           each commodity volume <999 tonnes if not error throw on same page
                 4 d->methods to determine commodity -> CommodityDetermination.html
-                4 e-> commodity file upload page -> CommodityFileUpload.html
+                4 e-> commodity file upload page -> CommoditySupportingDocuments.html
                 4 f-> checkanswers page ->CheckAnswers.html
                 4 g-> application completed -> applicationcomplete.html
             

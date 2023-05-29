@@ -1,13 +1,12 @@
-
-    {% extends "layouts/main.html" %}
+{% extends "layouts/main.html" %}
 
 {% block pageTitle %}
   Question page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{{ govukPhaseBanner({
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
   tag: {
     text: "alpha"
   },
@@ -19,37 +18,20 @@
 {% block content %}
 
   <div class="govuk-grid-row">
+
     <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-xl govuk-!-padding-bottom-7">
+        {{data.company}}
+      </span>
 
-      
-
-      <form class="form" action="../ParentCompany" method="post">
-
-        <p>
-
-
-
-
-          
-
-          <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-               
-              </legend>
-              
-              <!-- <h2 class="govuk-heading-xl">
-             Do you have a parent company?
-              </h2> -->
-
-              {{ govukRadios({
+      <form class="form" action="/ParentCompany" method="post">
+        {{ govukRadios({
                 id: "ParentCompany",
                 name: "ParentCompany",               
-                
                 fieldset: {
                   legend: {
-                    text: "  Do you have a parent company?",
-                    isPageHeading: true,                  
+                    text: "Is your business owned or managed by a parent company?",
+                    isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                   }
                 },
@@ -67,22 +49,39 @@
                   }
                 ]
               }) }}
-              {{ govukInsetText({
+        {{ govukInsetText({
                 text: "If you answered Yes, you will need to provide annual turnover details for your parent company."
               }) }}
-            </fieldset>
-          </div>
-</p>
-<button class="govuk-button" data-module="govuk-button">Save and Continue</button>
-&nbsp;
-<a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary"  data-module="govuk-button">
-  Save and come back later
-</a>
 
+        <button class="govuk-button" data-module="govuk-button">Save and continue</button>
+        <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
+            Save and come back later
+        </a>
       </form>
-      <a class="govuk-link" href="#">Get help with this page</a>
-  
-    </div>
-  </div>
 
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" href="#">Get help with this page</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+            Related Content
+          </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list">
+            <li>
+              <a class="govuk-link" href="#">
+                    Forest Risk Commodities guidance
+                </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+
+  </div>
 {% endblock %}

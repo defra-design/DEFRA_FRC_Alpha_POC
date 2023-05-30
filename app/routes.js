@@ -174,7 +174,7 @@ router.post('/getdata_amended_threshold', function (req, res) {
   
   req.session.data['ammendYearError'] = 'Yes';
   return req.session.save(() => {
-    res.redirect("/thresholdchange");
+    res.redirect("/thresholdChange");
   });
 });
 

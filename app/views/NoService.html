@@ -13,18 +13,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-xl"> This service is not for you</h1>
-        <p>
-            Based on your answer provided, this service is not for you as your global turnover is 
-            less than 50 million.
-             Please close this page or go back to home page.
-        </p>
-        <form action="/Dashboard" method="post" novalidate>     
-
-          <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-          Return to Dashboard
-          </button>
-  
-        </form>
-        {% endblock %}
-
+      <h1 class="govuk-heading-l">You do not need to use this service.</h1>
+      <p>
+        Based on the information you have given, you are not required to submit a due diligence report or request an excemption from reporting.
+      </p>
+      <a href="/Dashboard" role="button" draggable="false" class="govuk-button"  data-module="govuk-button">
+        Home
+      </a>
+    {% endblock %}

@@ -20,9 +20,13 @@
   <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl govuk-!-padding-bottom-7">
+      <span class="govuk-caption-xl">
         {{data.company}}
       </span>
+       <span class="govuk-caption-m govuk-!-padding-bottom-7">
+        Reporting year {{data.reportingPeriod}}
+      </span>
+
 
       <form class="form" action="/getdata_amended_threshold" method="post">
         {{ govukDateInput({
@@ -39,19 +43,17 @@
                     hint: {
                       text: "Enter the date when you expect to exceed the usage threshold for the selected commoditiy."
                     },
+                    errorMessage: {
+                      text: "Enter a year within the current reporting period"
+                    } if data['ammendYearError'] === 'Yes' else false,
                     items: [
-                      {
-                        classes: "govuk-input--width-2",
-                        name: "day",
-                        value: data['threshold-change-day']
-                      },
                       {
                         classes: "govuk-input--width-2",
                         name: "month",
                         value: data['threshold-change-month']
                       },
                       {
-                        classes: "govuk-input--width-4",
+                        classes: "govuk-input--width-4 govuk-input--error" if data['ammendYearError'] === 'Yes' else "govuk-input--width-4",
                         name: "year",
                         value: data['threshold-change-year']
                       }

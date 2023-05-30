@@ -35,12 +35,12 @@ router.post('/Login-answer', function (req, res) {
 });*/
 
 router.post('/save-company', function (req, res) {
-  const {company} = req.session.data;
+  const { company } = req.session.data;
   req.session.data = {
     company
   };
 
-  req.session.save(()=>{
+  req.session.save(() => {
     res.redirect('/Dashboard');
   })
 });
@@ -146,27 +146,35 @@ router.post('/commodityvolume', function (req, res) {
 
 
 router.post('/getdata_amended_threshold', function (req, res) {
-  req.session.data['amendcomplete'] = 'Yes';
 
   const fromYear = req.session.data['threshold-change-year'];
   const fromMonth = req.session.data['threshold-change-month'];
-  const fromDay = req.session.data['threshold-change-day'];
-  const fromPeriod = new Date(`${fromYear}-${fromMonth}-${fromDay}`).toLocaleString('en-us', {
+  const fromPeriod = new Date(`${fromYear}-${fromMonth}-${String(new Date().getDate()).padStart(2, '0')}`).toLocaleString('en-us', {
     month: 'short', year: 'numeric'
   });
   const toPeriod = req.session.data['ExemptionPeriod'].split("to")[1];
+  const reportingYear = req.session.data['reportingPeriod'].split('to');
 
-  req.session.data['thresholdchange_Amend'] = `${fromPeriod} to ${toPeriod}`;
-  req.session.data['amendedCommodities'] = req.session.data['amendedCommodity'].map(commodity => {
-    const config = req.session.data['commodities'].find(_config => _config.value === commodity)
-    return {
-      id: config.value,
-      text: config.text,
-    }
-  });
+  if (reportingYear && reportingYear.map(year => year.trim()).includes(fromYear)) {
+    req.session.data['amendcomplete'] = 'Yes';
+    req.session.data['thresholdchange_Amend'] = `${fromPeriod} to ${toPeriod}`;
+    req.session.data['amendedCommodities'] = req.session.data['amendedCommodity'].map(commodity => {
+      const config = req.session.data['commodities'].find(_config => _config.value === commodity)
+      return {
+        id: config.value,
+        text: config.text,
+      }
+    });
+    req.session.data['ammendYearError'] = 'No';
 
-  req.session.save(() => {
-    res.redirect("/amendCommodityMethods");
+    return req.session.save(() => {
+      res.redirect("/amendCommodityMethods");
+    });
+  }
+  
+  req.session.data['ammendYearError'] = 'Yes';
+  return req.session.save(() => {
+    res.redirect("/thresholdchange");
   });
 });
 

@@ -52,7 +52,7 @@ module.exports = {
   ],
   errors: {
     commodities: {
-      invalid: 'The volume must be less than 999 tonnes'
+      invalid: 'The volume must be 999 tonnes or less'
     }
   }
 }

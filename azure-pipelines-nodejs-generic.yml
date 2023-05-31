@@ -21,7 +21,10 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'Azure-Self-CR'
-    repository: 'defra-frc-alpha'
+    containerRegistry: 'Defra-Azr-CR-FRC-Alpha'
+    repository: 'frc-alpha-poc'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+      latest

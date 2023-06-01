@@ -5,20 +5,6 @@
 
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
-/*const CommodityVolumeGetController_Router = govukPrototypeKit.requests.setupRouter()
-const AnnualIncomeController = govukPrototypeKit.requests.setupRouter()
-
-const ParentCompanyController = govukPrototypeKit.requests.setupRouter()
-const ParentCompanyIncomeController = govukPrototypeKit.requests.setupRouter()
-const commodityvolumeController = govukPrototypeKit.requests.setupRouter()
-const UserjourneyController = govukPrototypeKit.requests.setupRouter()
-const applicationcompletionController = govukPrototypeKit.requests.setupRouter()
-const AmendedCommodityController = govukPrototypeKit.requests.setupRouter()
-const Static_AmendedCommodityController = govukPrototypeKit.requests.setupRouter()
-const AppComplete_AmendedCommodityController = govukPrototypeKit.requests.setupRouter()
-const ExemptionPeriodController = govukPrototypeKit.requests.setupRouter()
-const AmendedExemptionPeriodController = govukPrototypeKit.requests.setupRouter()
-const CommodityMethodsController = govukPrototypeKit.requests.setupRouter()*/
 
 router.post('/Login-answer', function (req, res) {
   const accountholder = req.session.data['Accountholder'];
@@ -30,9 +16,10 @@ router.post('/Login-answer', function (req, res) {
   }
 });
 
-/*router.get('/session', function (req, res) {
-  res.json(req.session)
-});*/
+router.post('/select-company', function (req, res, next) {
+  req.session.destroy();
+  next()
+});
 
 router.post('/save-company', function (req, res) {
   const { company } = req.session.data;
@@ -41,16 +28,14 @@ router.post('/save-company', function (req, res) {
   };
 
   req.session.save(() => {
-    res.redirect('/Dashboard');
+    res.redirect('/dashboard');
   })
 });
 
-router.post('/UserServices', function (req, res) {
+router.post('/user-services', function (req, res, next) {
   const { company } = req.session.data;
   req.session.data = { company };
-  req.session.save(() => {
-    res.redirect('/UserServices');
-  })
+  req.session.save(next)
 })
 
 router.post('/Userjourney', function (req, res) {
@@ -60,10 +45,10 @@ router.post('/Userjourney', function (req, res) {
 
   req.session.save(() => {
     if (Userservice == "Exemption") {
-      return res.redirect("/AnnunalTurnover")
+      return res.redirect("/annual-turnover")
     }
 
-    res.redirect("/amendCommodities")
+    res.redirect("/amend-commodities")
   });
 });
 
@@ -71,29 +56,29 @@ router.post('/AnnualIncome', function (req, res) {
   const { AnnualIncome } = req.session.data;
 
   if (AnnualIncome < 500) {
-    return res.redirect('/ParentCompany');
+    return res.redirect('/parent-company');
   }
 
-  return res.redirect('/PeriodOfExemption');
+  return res.redirect('/period-of-exemption');
 });
 
-router.post('/ParentCompany', function (req, res) {
+router.post('/parent-company', function (req, res) {
   const { ParentCompany } = req.session.data;
 
   if (ParentCompany === "Yes") {
-    return res.redirect('/ParentCompanyDetails')
+    return res.redirect('/parent-company-details')
   }
-  res.redirect('/NoService')
+  res.redirect('/no-service')
 });
 
 router.post('/ParentCompanyAnnualIncome', function (req, res) {
   const { ParentCompanyAnnualIncome } = req.session.data;
 
   if (ParentCompanyAnnualIncome < 100) {
-    return res.redirect('/NoService');
+    return res.redirect('/no-service');
   }
 
-  res.redirect('/PeriodOfExemption')
+  res.redirect('/period-of-exemption')
 });
 
 router.post('/exemptionperiod', function (req, res) {
@@ -103,7 +88,7 @@ router.post('/exemptionperiod', function (req, res) {
   }
 
   req.session.save(() => {
-    res.redirect("/FRCcommodities");
+    res.redirect("/frc-commodities");
   });
 });
 
@@ -119,7 +104,7 @@ router.get('/CommodityVolumeController', function (req, res) {
   });
 
   req.session.save(() => {
-    res.redirect('/CommodityVolume');
+    res.redirect('/commodity-volume');
   });
 });
 
@@ -137,10 +122,10 @@ router.post('/commodityvolume', function (req, res) {
 
   req.session.save(() => {
     if (selectedCommodities.find(commodity => commodity.errorMessage != undefined)) {
-      return res.redirect("/CommodityVolume")
+      return res.redirect("/commodity-volume")
     }
 
-    res.redirect("/CommodityDetermination")
+    res.redirect("/commodity-determination")
   });
 });
 
@@ -168,13 +153,13 @@ router.post('/getdata_amended_threshold', function (req, res) {
     req.session.data['ammendYearError'] = 'No';
 
     return req.session.save(() => {
-      res.redirect("/amendCommodityMethods");
+      res.redirect("/amend-commodity-methods");
     });
   }
   
   req.session.data['ammendYearError'] = 'Yes';
   return req.session.save(() => {
-    res.redirect("/thresholdChange");
+    res.redirect("/amend-threshold");
   });
 });
 
@@ -192,27 +177,6 @@ router.post('/appcomplete', function (req, res) {
   req.session.data['currentdate'] = currentDate;
 
   req.session.data['complete'] = 'Yes';
-  res.redirect("/applicationcomplete");
+  res.redirect("/application-complete");
 
 });
-
-/*
-Static_AmendedCommodityController.post('/getdata_amend', function (req, res) {
-  if (req.session.data['static_amend_commodity'] == "Soy") {
-    res.redirect("/thresholdchange_soya");
-  }
-  else {
-    res.redirect("/thresholdchange_rubber");
-  }
-
-});
-
-AppComplete_AmendedCommodityController.post('/getdata_appcomplete', function (req, res) {
-  if (req.session.data['static_amend_commodity'] == "Soy") {
-    res.redirect("/application_complete_Soy");
-  }
-  else {
-    res.redirect("/application_complete_rubber");
-  }
-
-});*/

@@ -16,64 +16,36 @@
 {% endblock %}
 
 {% block content %}
+
   <div class="govuk-grid-row">
+
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-xl govuk-!-padding-bottom-7">
         {{data.company}}
       </span>
 
-      <form class="form" action="/ParentCompanyAnnualIncome" method="post">
-        {{ govukSelect({
-        name: "parentCompany",
-        value: data.parentCompany,
-        fieldset: {
-          legend: {
-            text: "Provide your parent company details",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
-        label: {
-          text: "Select your parent company"
-        },
-        items: data.companyList
-      }) }}
-
-        <p>or</p>
-
-        {{ govukInput({
-            label: {
-              text: "Provide your company name"
-            },
-            hint: {
-              text: "Only add your parent company name if it is not in the above list"
-            },
-            value: data['authentication-code'],
-            classes: "govuk-!-width-two-thirds",
-            id: "authentication-code",
-            name: "authentication-code",
-            spellcheck: false
-          }) }}
-
-        {{ govukInput({
-            id: "ParentCompanyAnnualIncome",
-            name: "ParentCompanyAnnualIncome",
-            value: data['ParentCompanyAnnualIncome'],
-            label: {
-              text: "What is your parent company’s annual turnover?"
-              
-            },
-            prefix: {
-              text: "£"
-            },
-            classes: "govuk-!-width-one-third",
-            spellcheck: false
-          }) }}
+      <form class="form" action="/amend-threshold" method="post">
+              {{ govukCheckboxes({
+              name: "amendedCommodity",
+              values:data['amendedCommodity'],
+              fieldset: {
+                legend: {
+                  text: "Which exempted commodities do you want to amend?",
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--l"
+                }
+              },
+              hint: {
+                text: "Only select the commodities where your usage will exceed the minimum threshold during this reporting period."
+              },
+                items: data['selectedCommodities']
+              }) }}
         <button class="govuk-button" data-module="govuk-button">Save and continue</button>
-        <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
+        <a href="/dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
             Save and come back later
         </a>
       </form>
+
 
       <ul class="govuk-list">
         <li>
@@ -98,6 +70,6 @@
         </nav>
       </aside>
     </div>
-
   </div>
+
 {% endblock %}

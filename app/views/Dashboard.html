@@ -32,7 +32,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Report your forest risk commodity due diligence</h1>
 
-      <form action="/UserServices" method="post" novalidate>
+      <form action="/user-services" method="post" novalidate>
         {{ govukSelect({
         id: "company",
         name: "company",
@@ -154,7 +154,7 @@
                 </span>
               </dd>
               <dd class="govuk-summary-list__value">
-                <a href="/CheckAnswersAmended" class="govuk-link govuk-!-margin-right-4">
+                <a href="/check-answers-amended" class="govuk-link govuk-!-margin-right-4">
                   View              
                 </a>
               </dd>
@@ -179,11 +179,11 @@
                   </span>
                 </dd>
                 <dd class="govuk-summary-list__value">
-                  <a href="/CheckAnswers" class="govuk-link govuk-!-margin-right-4">
+                  <a href="/check-answers" class="govuk-link govuk-!-margin-right-4">
                   View              
                 </a>
                   {% if (data['amendcomplete'] !== "Yes") %}
-                    <a href="/amendCommodities" class="govuk-link">
+                    <a href="/amend-commodities" class="govuk-link">
                  Amend              
                </a>
                     {%endif%}

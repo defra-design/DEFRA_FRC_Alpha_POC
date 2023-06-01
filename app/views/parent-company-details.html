@@ -16,45 +16,60 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
-
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-xl govuk-!-padding-bottom-7">
         {{data.company}}
       </span>
 
-      <form class="form" action="/ParentCompany" method="post">
-        {{ govukRadios({
-                id: "ParentCompany",
-                name: "ParentCompany",               
-                fieldset: {
-                  legend: {
-                    text: "Is your business owned or managed by a parent company?",
-                    isPageHeading: true,
-                    classes: "govuk-fieldset__legend--l"
-                  }
-                },
-                hint: {
-                  text: "For example, your business is owned by a larger holding company."
-                },
-                items: [
-                  {
-                    value: "Yes",
-                    text: "Yes"
-                  },
-                  {
-                    value: "No",
-                    text: "No"
-                  }
-                ]
-              }) }}
-        {{ govukInsetText({
-                text: "If you answered Yes, you will need to provide annual turnover details for your parent company."
-              }) }}
+      <form class="form" action="/ParentCompanyAnnualIncome" method="post">
+        {{ govukSelect({
+        name: "parentCompany",
+        value: data.parentCompany,
+        fieldset: {
+          legend: {
+            text: "Provide your parent company details",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        label: {
+          text: "Select your parent company"
+        },
+        items: data.companyList
+      }) }}
 
+        <p>or</p>
+
+        {{ govukInput({
+            label: {
+              text: "Provide your company name"
+            },
+            hint: {
+              text: "Only add your parent company name if it is not in the above list"
+            },
+            value: data['parentCompanyCustom'],
+            classes: "govuk-!-width-two-thirds",
+            name: "parentCompanyCustom",
+            spellcheck: false
+          }) }}
+
+        {{ govukInput({
+            id: "ParentCompanyAnnualIncome",
+            name: "ParentCompanyAnnualIncome",
+            value: data['ParentCompanyAnnualIncome'],
+            label: {
+              text: "What is your parent company’s annual turnover?"
+              
+            },
+            prefix: {
+              text: "£"
+            },
+            classes: "govuk-!-width-one-third",
+            spellcheck: false
+          }) }}
         <button class="govuk-button" data-module="govuk-button">Save and continue</button>
-        <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
+        <a href="/dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
             Save and come back later
         </a>
       </form>

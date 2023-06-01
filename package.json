@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
@@ -7,12 +10,9 @@
     "build": "gulp build"
   },
   "dependencies": {
-    "@govuk-prototype-kit/common-templates": "^1.0.0",
-    "@hapi/hapi": "^21.3.0",
+    "@govuk-prototype-kit/common-templates": "^1.1.1",
     "govuk-frontend": "^4.6.0",
-    "govuk-prototype-kit": "^13.6.1",
-    "hmrc-frontend": "^5.27.0",
-    "nunjucks": "^3.2.3"
+    "govuk-prototype-kit": "^13.7.1"
   },
   "devDependencies": {
     "del": "^7.0.0",

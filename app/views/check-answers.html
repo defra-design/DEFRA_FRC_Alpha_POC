@@ -32,7 +32,7 @@
             {{ data.company }}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a href="/AnnunalTurnover">
+            <a href="/annual-turnover">
               Change
             </a>
           </dd>
@@ -47,7 +47,7 @@
 
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a href="/AnnunalTurnover">
+            <a href="/annual-turnover">
               Change
             </a>
           </dd>
@@ -61,7 +61,7 @@
             {{ data['ExemptionPeriod'] }}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a href="/PeriodOfExemption">
+            <a href="/period-of-exemption">
               Change
             </a>
           </dd>
@@ -75,7 +75,7 @@
             {{data['FRC'].join('<br/>') | safe if data['FRC'] else ""}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a href="/FRCcommodities">
+            <a href="/frc-commodities">
               Change
               <span class="govuk-visually-hidden"> name</span>
             </a>
@@ -99,7 +99,7 @@
           </dd>
 
             <dd class="govuk-summary-list__actions">
-              <a href="/CommodityVolume">
+              <a href="/commodity-volume">
               Change
             </a>
             </dd>
@@ -115,7 +115,7 @@
             </dd>
 
             <dd class="govuk-summary-list__actions">
-              <a href="/CommodityDetermination">
+              <a href="/commodity-determination">
               Change
             </a>
             </dd>
@@ -131,7 +131,7 @@
             </dd>
 
             <dd class="govuk-summary-list__actions">
-              <a href="/CommodityDetermination">
+              <a href="/commodity-determination">
               Change
             </a>
             </dd>
@@ -147,7 +147,7 @@
             </dd>
 
             <dd class="govuk-summary-list__actions">
-              <a href="/CommoditySupportingDocuments">
+              <a href="/commodity-supporting-documents">
               Change
             </a>
             </dd>
@@ -166,7 +166,7 @@
               {{ data['ParentCompany'] }}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a href="/ParentCompany">
+              <a href="/parent-company">
               Change
               
             </a>
@@ -177,10 +177,10 @@
             Parent company name
           </dt>
             <dd class="govuk-summary-list__value">
-              {{ data['parentCompany'] }}
+              {{ data['parentCompany'] if data['parentCompany']!=="" else data['parentCompanyCustom'] }}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a href="/ParentCompanyDetails">
+              <a href="/parent-company-details">
               Change
               
             </a>
@@ -195,7 +195,7 @@
               {{ data['ParentCompanyAnnualIncome'] }}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a href="/ParentCompanyDetails">
+              <a href="/parent-company-details">
                 Change
               </a>
             </dd>
@@ -212,7 +212,7 @@
         <input type="hidden" name="answers-checked" value="true">
 
         <button class="govuk-button" data-module="govuk-button">Submit</button>
-        <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
+        <a href="/dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
               Save and come back later
           </a>
       </form>

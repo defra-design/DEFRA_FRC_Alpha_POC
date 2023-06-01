@@ -1,4 +1,3 @@
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
@@ -6,7 +5,7 @@ Question page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
-
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
   {{ govukPhaseBanner({
 tag: {
 text: "alpha"
@@ -17,6 +16,7 @@ html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a
 {% endblock %}
 
 {% block content %}
+
   <div class="govuk-grid-row">
 
     <div class="govuk-grid-column-two-thirds">
@@ -27,37 +27,43 @@ html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a
         Reporting year {{data.reportingPeriod}}
       </span>
 
-      <form class="form" action="/commodityvolume" method="post">
+      <form class="form" action="/commodity-supporting-documents" method="post">
+
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             <h1 class="govuk-fieldset__heading">
-              What is your expected usage of these commodities for the selected reporting year?
+              What methods have you used to determine your commodity usage?
             </h1>
           </legend>
-          <div class="govuk-hint">
-            Usage must be under 1000 tonnes for each commodity to be exempt
-          </div>
+          <p class="govuk-body">
+            Briefly summarise the methods you use to calculate how much of the selected commodities you use in your business, and upload any supporting documentation.
+          </p>
 
-          {% for commodity in data['selectedCommodities'] %}
-            {{ govukInput({
-                label: {
-                  text:commodity.text
-                },
-                classes: "govuk-input--width-5",         
-                name: commodity.id,
-                value:data[commodity.id] if data[commodity.id] else "",
-                suffix: {
-                  text: "tonnes"
-                },
-                errorMessage: {
-                  text: commodity.errorMessage
-                } if commodity.errorMessage else undefined,
-                spellcheck: false
-          }) }}
-          {% endfor %}
-        </fieldset>
+            {% for commodity in data['selectedCommodities'] %}
+              <div class="govuk-!-padding-top-4">
+                {{ govukCharacterCount({
+                    name: commodity.id+"_description",           
+                    maxlength: 5000,
+                    value:data[commodity.id+'_description'] if data[commodity.id+'_description'] else "",
+                    label: {      
+                      text: commodity.text,     
+                      classes: "govuk-label--l",
+                      isPageHeading: true
+                    } }) 
+                }}
+
+                {{ govukFileUpload({
+                    name: commodity.id+'_document',
+                    label: {
+                      text: "Upload a file"
+                    } })  
+                }}
+
+              </div>
+            {% endfor %}
+          </fieldset>
         <button class="govuk-button" data-module="govuk-button">Save and continue</button>
-        <a href="/Dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
+        <a href="/dashboard" role="button" draggable="false" class="govuk-button govuk-button--secondary govuk-!-margin-left-5"  data-module="govuk-button">
               Save and come back later
           </a>
       </form>
